@@ -1,68 +1,39 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Home - The Social Media site built around people dealing with cancer, allowing them to be able to chat in chat rooms, add each other as friends, message each other, and make posts. If you feel like you are all alone, you always have a Home here where people are in the same shoes as you and understand you on a personal level. 
 
-## Available Scripts
+## Idea and Users
+- The idea is for users to be able to create an account and be able to talk with people who are in the same boat as you. During these times of Covid-19, cancer patients are all alone while getting treatments, all alone in fear of their immune system being compromised. The goal is to bring everyone together. Build a family and network of friends in a new home designed to remove that lonliness. If you are newly diagnosed, you will find family here willing to take you in and help you understand and remove that fear.
 
-In the project directory, you can run:
+## Features 
+- My MVP is being able to create an account, be able to make posts, view posts, chat in a chat room.
+- Bonus features will be to add friends, DM them comment on posts and like posts.
 
-### `npm start`
+## Endpoints
+### Auth Endpoints
+- POST '/api/auth/register'. req.body = email, password, first name, last name, username. (a@aol.com, password, eric, camp, trix)
+- Send username and userId
+- POST '/api/auth/login' req.body = email, password( a@aol.com, password)
+- Send username and userId
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Post Endpoints 
+- GET '/api/posts' will send all posts. 
+- GET '/api/posts/:id' will send that specific post they want to view.
+- POST '/api/posts/:id' will allow the user to create a new post.
+- PUT '/api/posts/:id' will allow the user to edit their post.
+- DELETE '/api/posts/:id' will allow the user to delete their post. 
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Schemas
+- create a table called users that will have 6 columns (id as serial primary key, email with a varchar, password with a varchar, first name with a varchar, last name with a varchar, username with a varchar)
+- create a table called posts that will have 5 columms (id as a serial primary key, title with a varchar, img as text, content as varchar, author_id integer that references users id)
+- create a table called messages that will have 3 columns (id as a serial primary key, messages as a varchar, time as to_timestamp, and user_id that references users id.)
 
-### `npm test`
+## Point Plan
+- Have it responsive in at least 3 different screen sizes for 10 points.
+- React redux in at least one store for 5 points and write to store for 5 points.
+- I will be using only hooks on at least 5 components for 10 points. 
+- Fully working authentication for 10 points 
+- I will be using sockets, at least 10 points. 
+- I will implement nodemailer for 10 points.
+- I will implement Sass/Less for 5 - 10 points.
+- I will use 20 - 40 lines of inline css for 5 points. 
+- I will host for 10 points. 
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
