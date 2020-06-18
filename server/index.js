@@ -16,7 +16,16 @@ app.use(session({
     secret: SESSION_SECRET
 }))
 
-//endpoints will go here
+app.get('/auth/user', authCtrl.getUser)
+app.post('/auth/register', authCtrl.register)
+app.post('/auth/logout', authCtrl.logout)
+app.post('/auth/login', authCtrl.login)
+
+app.get('/api/posts/:id', postCtrl.getPost)
+app.get('/api/posts', postCtrl.getPosts)
+app.post('/api/posts', postCtrl.addPost)
+app.put('/api/posts/:id', postCtrl.editPost)
+app.delete('/api/posts/:id', postCtrl.deletePost)
 
 massive({
     connectionString: CONNECTION_STRING,
