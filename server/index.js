@@ -35,6 +35,6 @@ massive({
     app.set('db', db)
     console.log('beating cancer one db at a time')
     app.listen(SERVER_PORT, () => {
-        console.log(`Getting ws on port ${SERVER_PORT}`)
+        console.log(`Getting Ws on port ${SERVER_PORT}`)
     })
 })
