@@ -29,7 +29,7 @@ const Login = (props) => {
       });
   }
 
-  function register(e) {
+  function register() {
     props.history.push("/register");
   }
 
