@@ -16,10 +16,11 @@ const GetUsers = () =>  {
   return state
 }
 
-const getMyServerUsers = () => new Promise((res) => {
-    setTimeout(()=>{
-    return res(['blakely, Brynna, Griffin, KyloRen'])
-  }, 2000)
-})
+
+// const getMyServerUsers = () => new Promise((res, rej) => {
+//     setTimeout(()=>{
+//     return res(['blakely, Brynna, Griffin, KyloRen'])
+//   }, 2000)
+// })
 
 export default GetUsers
