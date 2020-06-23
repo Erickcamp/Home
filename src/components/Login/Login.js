@@ -2,10 +2,61 @@ import React, { useState } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { loginUser } from "../../ducks/reducer";
+import { makeStyles, useTheme } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  backgroundImg: {
+    backgroundImage: "linear-gradient(to top, #a8edea 0%, #fed6e3 100%)",
+    height: "100vh",
+    width: "100vw",
+    position: "absolute",
+  },
+
+  formContainer: {
+    width: "50vw",
+    height: "25vh",
+    margin: "0 auto",
+    borderRadius: "14px",
+    marginTop: "25px",
+    padding: "20px",
+    color: "white",
+    fontFamily: "Open Sans, sans-serif",
+    boxShadow: "5px 10px 35px  black",
+  },
+
+  loginInfo: {
+    width: "100px",
+    height: "50px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-around",
+    alignItems: "center",
+    color: "white",
+    margin: "0 auto",
+  },
+
+  loginBtn: {
+    display: "inline-block",
+    height: "20px",
+    width: "100px",
+    backgroundColor: "#fed6e3",
+    color: "black",
+    margin: "20px",
+    "&:hover": {
+      backgroundColor: "white",
+    },
+  },
+
+  quote: {
+    marginTop: "150px",
+    fontSize: "40px",
+  },
+}));
 
 const Login = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const classes = useStyles();
 
   function handleUsername(e) {
     setUsername(e.target.value);
@@ -34,30 +85,32 @@ const Login = (props) => {
   }
 
   return (
-    <div className="login-container">
-      <form onSubmit={(e) => login(e)} className="form-container">
+    <div className={classes.backgroundImg}>
+      <form onSubmit={(e) => login(e)} className={classes.formContainer}>
         <h1>Welcome Home</h1>
-        <div className="input-info">
+        <div className={classes.loginInfo}>
           <input
             placeholder="username"
             value={username}
             onChange={handleUsername}
-            className="username-input"
           />
           <input
             placeholder="password"
             type="password"
             value={password}
             onChange={handlePassword}
-            className="password-input"
           />
         </div>
-        <button onClick={login} className="login-btn">
+        <button onClick={login} className={classes.loginBtn}>
           Login
         </button>
-        <button onClick={register} className="login-btn">
+        <button onClick={register} className={classes.loginBtn}>
           Register
         </button>
+        <p className={classes.quote}>
+          "You beat cancer by how you live, why you live, and the manner in
+          which you live.” - Stuart Scott
+        </p>
       </form>
     </div>
   );
