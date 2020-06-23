@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { loginUser } from "../../ducks/reducer";
-import { makeStyles, useTheme } from "@material-ui/core";
+import { makeStyles, useTheme, TextField, Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   backgroundImg: {
@@ -13,11 +13,11 @@ const useStyles = makeStyles((theme) => ({
   },
 
   registerInfo: {
-    width: "200px",
-    height: "25px",
+    width: "100vw",
+    height: '60vh',
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-around",
+    justifyContent: "space-evenly",
     alignItems: "center",
     color: "white",
     margin: "0 auto",
@@ -100,52 +100,46 @@ const Register = (props) => {
         in fringilla est dui vel lacus. Mauris sed condimentum nibh. Etiam id
         pulvinar orci.
       </p>
-      <div className="register-input">
-        <input
+      <div className={classes.registerInfo}>
+        <TextField
           placeholder="username"
           value={username}
           onChange={handleUsername}
-          className={classes.registerInfo}
         />
-        <input
+        <TextField
           placeholder="password"
           type="password"
           value={password}
           onChange={handlePassword}
-          className={classes.registerInfo}
         />
-        <input
+        <TextField
           placeholder="confirm password"
           type="password"
           value={confirmPassword}
           onChange={handleConfirm}
-          className={classes.registerInfo}
         />
-        <input
+        <TextField
           placeholder="email"
           value={email}
           onChange={handleEmail}
-          className={classes.registerInfo}
         />
-        <input
+        <TextField
           placeholder="first name"
           value={first_name}
           onChange={handleFirstName}
-          className={classes.registerInfo}
         />
-        <input
+        <TextField
           placeholder="last name"
           value={last_name}
           onChange={handleLastName}
-          className={classes.registerInfo}
         />
       </div>
-      <button onClick={register} className="reg-btn">
+      <Button onClick={register} className="reg-btn">
         Register
-      </button>
-      <button onClick={cancel} className="reg-btn">
+      </Button>
+      <Button onClick={cancel} className="reg-btn">
         Cancel
-      </button>
+      </Button>
     </div>
   );
 };

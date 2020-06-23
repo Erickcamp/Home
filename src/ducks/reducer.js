@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const initialState = {
-  username: "",
-  userId: 0,
+  // username: "",
+  // userId: 0,
 };
 
 export const LOGIN_USER = "LOGIN_USER";
