@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { loginUser } from "../../ducks/reducer";
-import { makeStyles, useTheme } from "@material-ui/core";
+import { makeStyles, useTheme, TextField, Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   backgroundImg: {
@@ -36,10 +36,8 @@ const useStyles = makeStyles((theme) => ({
   },
 
   loginBtn: {
-    display: "inline-block",
     height: "20px",
     width: "100px",
-    backgroundColor: "#fed6e3",
     color: "black",
     margin: "20px",
     "&:hover": {
@@ -89,24 +87,24 @@ const Login = (props) => {
       <form onSubmit={(e) => login(e)} className={classes.formContainer}>
         <h1>Welcome Home</h1>
         <div className={classes.loginInfo}>
-          <input
+          <TextField
             placeholder="username"
             value={username}
             onChange={handleUsername}
           />
-          <input
+          <TextField
             placeholder="password"
             type="password"
             value={password}
             onChange={handlePassword}
           />
         </div>
-        <button onClick={login} className={classes.loginBtn}>
+        <Button onClick={login} className={classes.loginBtn}>
           Login
-        </button>
-        <button onClick={register} className={classes.loginBtn}>
+        </Button>
+        <Button onClick={register} className={classes.loginBtn}>
           Register
-        </button>
+        </Button>
         <p className={classes.quote}>
           "You beat cancer by how you live, why you live, and the manner in
           which you live.” - Stuart Scott
