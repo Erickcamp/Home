@@ -3,6 +3,8 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { loginUser } from "../../ducks/reducer";
 import { makeStyles, useTheme, TextField, Button } from "@material-ui/core";
+import { toast, ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 const useStyles = makeStyles((theme) => ({
   backgroundImg: {
@@ -60,7 +62,7 @@ const Register = (props) => {
   function register(e) {
     e.preventDefault();
     if (password !== confirmPassword) {
-      alert("password does not match");
+      toast.error("Password does not match");
     } else {
       axios
         .post("/auth/register", {
@@ -75,7 +77,7 @@ const Register = (props) => {
           props.history.push("/dashboard");
         })
         .catch((err) => {
-          alert("username is already in use.");
+          toast.error("Username is already in use.");
           console.log(err);
         });
     }
@@ -140,6 +142,7 @@ const Register = (props) => {
       <Button onClick={cancel} className="reg-btn">
         Cancel
       </Button>
+      <ToastContainer />
     </div>
   );
 };

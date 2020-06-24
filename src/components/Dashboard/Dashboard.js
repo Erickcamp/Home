@@ -3,20 +3,18 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { makeStyles, useTheme } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => {
-    
-})
+const useStyles = makeStyles((theme) => {});
 
 const Dashboard = (props) => {
-  const [posts, setPosts] = useState("");
+  const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("");
-  const [userposts, setUserposts] = useState(true)
-  const classes = useStyles()
+  const [userposts, setUserposts] = useState(true);
+  const classes = useStyles();
 
   useEffect(() => {
     getPosts();
-  });
+  }, []);
 
   const getPosts = () => {
     axios
@@ -66,42 +64,52 @@ const Dashboard = (props) => {
   }
 
   const checkboxHandler = () => {
-      if(userposts){
-          setUserposts(false)
-      } else {
-          setUserposts(true)
-      }
-  }
+    if (userposts) {
+      setUserposts(false);
+    } else {
+      setUserposts(true);
+    }
+  };
 
-  return(
+  return (
     <div>
-    <div className="searchBox">
-      <input
-        placeholder="Search by Title"
-        onChange={handleFilter}
-        value={filter}
-      />
-      <button onClick={searchPosts}>Search</button>
-      <button onClick={resetState}>Reset</button>
-      <span>My Posts</span>
-      <input
-        type="checkbox"
-        onChange={checkboxHandler}
-        checked={userposts}
-      />
+      <div className="searchBox">
+        <input
+          placeholder="Search by Title"
+          onChange={handleFilter}
+          value={filter}
+        />
+        <button onClick={searchPosts}>Search</button>
+        <button onClick={resetState}>Reset</button>
+        <span>My Posts</span>
+        <input type="checkbox" onChange={checkboxHandler} checked={userposts} />
+      </div>
+      <div className="posts">
+        {!loading ? (
+          posts.map((el) => {
+            return (
+              <div
+                key={el.id}
+                onClick={() => props.history.push(`/posts/${el.id}`)}
+              >
+                <div className="content_posts dashboard_post_box">
+                  <h3>{el.title}</h3>
+                  <div className="username_box">
+                    <p>Posted by: {el.username}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })
+        ) : (
+          <div className="load_box">
+            <div className="load_background"></div>
+            <div className="load"></div>
+          </div>
+        )}
+      </div>
     </div>
-    <div className="posts">
-      {!loading ? (
-        posts
-      ) : (
-        <div className="load_box">
-          <div className="load_background"></div>
-          <div className="load"></div>
-        </div>
-      )}
-    </div>
-  </div>
-  )
+  );
 };
 
 const mapStateToProps = (reduxState) => reduxState;
