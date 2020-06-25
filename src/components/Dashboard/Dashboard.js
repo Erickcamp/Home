@@ -58,14 +58,6 @@ const Dashboard = (props) => {
       });
   };
 
-  function handlePosts(e) {
-    setPosts(e.target.value);
-  }
-
-  function handleLoading(e) {
-    setLoading(e.target.value);
-  }
-
   function handleFilter(e) {
     setFilter(e.target.value);
   }

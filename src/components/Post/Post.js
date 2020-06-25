@@ -50,17 +50,16 @@ const Post = (props) => {
     <div className={classes.backgroundImg}>
       <h2>New Post</h2>
       <label>Post Title:</label>
-      <input placeholder="title" value={title} onChange={handleTitle} />
-      <label>Image URL</label>
-      <input value={img} onChange={handleImg} />
+      <TextField value={title} onChange={handleTitle} />
+      <label>Image URL:</label>
+      <TextField value={img} onChange={handleImg} />
       <label>Post Content:</label>
-      <input
-        placeholder="start typing here"
+      <TextField
         value={content}
         onChange={handleContent}
       />
-      <button onClick={handleSubmit}>Submit</button>
-      <button onClick={cancel}>Cancel</button>
+      <Button onClick={handleSubmit}>Submit</Button>
+      <Button onClick={cancel}>Cancel</Button>
     </div>
   );
 };

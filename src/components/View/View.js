@@ -18,7 +18,7 @@ const View = (props) => {
 
   useEffect(() => {
     selectedPost();
-  }, []);
+  });
 
   function selectedPost() {
     axios

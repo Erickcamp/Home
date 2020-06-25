@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { Button, makeStyles, useTheme } from "@material-ui/core";
-import axios from 'axios'
+
 
 const useStyles = makeStyles((theme) => ({
   backgroundImg: {
