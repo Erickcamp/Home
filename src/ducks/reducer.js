@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const initialState = {
-  // username: "",
-  // userId: 0,
+  user:{username: "",
+  userId: 0}
 };
 
 export const LOGIN_USER = "LOGIN_USER";
@@ -23,19 +23,10 @@ export function logoutUser() {
   };
 }
 
-export function getUser() {
-  const user = axios.get("/auth/user");
-
-  return {
-    type: GET_USER,
-    payload: user,
-  };
-}
-
 export default function (state = initialState, action) {
   switch (action.type) {
     case LOGIN_USER:
-      return { ...state, user: action.pay };
+      return { ...state, user: action.payload };
     case LOGOUT_USER:
       return { ...state, ...action.payload };
     case GET_USER + "_PENDING":

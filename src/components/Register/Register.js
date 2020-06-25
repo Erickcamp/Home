@@ -3,8 +3,8 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { loginUser } from "../../ducks/reducer";
 import { makeStyles, useTheme, TextField, Button } from "@material-ui/core";
-import { toast, ToastContainer } from "react-toastify"
-import "react-toastify/dist/ReactToastify.css"
+import { toast } from "react-toastify"
+
 
 const useStyles = makeStyles((theme) => ({
   backgroundImg: {
@@ -142,7 +142,6 @@ const Register = (props) => {
       <Button onClick={cancel} className="reg-btn">
         Cancel
       </Button>
-      <ToastContainer />
     </div>
   );
 };

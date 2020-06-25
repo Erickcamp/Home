@@ -3,6 +3,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { loginUser } from "../../ducks/reducer";
 import { makeStyles, useTheme, TextField, Button } from "@material-ui/core";
+import { toast } from "react-toastify"
 
 const useStyles = makeStyles((theme) => ({
   backgroundImg: {
@@ -73,7 +74,7 @@ const Login = (props) => {
         props.history.push("/dashboard");
       })
       .catch((err) => {
-        alert("Incorrect username or password");
+        toast.error("Incorrect username or password");
         console.log(err);
       });
   }

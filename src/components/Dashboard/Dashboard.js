@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import { makeStyles, useTheme } from "@material-ui/core";
+import { makeStyles, useTheme, Button, TextField } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => {});
+const useStyles = makeStyles((theme) => ({
+  backgroundImg: {
+    backgroundImage: "linear-gradient(to top, #a8edea 0%, #fed6e3 100%)",
+    height: "100vh",
+    width: "100vw",
+    position: "absolute",
+  },
+}));
 
 const Dashboard = (props) => {
   const [posts, setPosts] = useState([]);
@@ -72,15 +79,15 @@ const Dashboard = (props) => {
   };
 
   return (
-    <div>
+    <div className={classes.backgroundImg}>
       <div className="searchBox">
-        <input
+        <TextField
           placeholder="Search by Title"
           onChange={handleFilter}
           value={filter}
         />
-        <button onClick={searchPosts}>Search</button>
-        <button onClick={resetState}>Reset</button>
+        <Button onClick={searchPosts}>Search</Button>
+        <Button onClick={resetState}>Reset</Button>
         <span>My Posts</span>
         <input type="checkbox" onChange={checkboxHandler} checked={userposts} />
       </div>

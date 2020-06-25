@@ -1,12 +1,17 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { getUser } from "../../ducks/reducer";
+import { Button, makeStyles, useTheme } from "@material-ui/core";
+import axios from 'axios'
+
+const useStyles = makeStyles((theme) => ({
+  backgroundImg: {
+    backgroundImage: "linear-gradient(to top, #fed6e3 100%, #a8edea 100%)",
+  },
+}));
 
 const Nav = (props) => {
-  useEffect(() => {
-    props.getUser();
-  });
+  const classes  = useStyles()
 
   const { push } = props.history;
   if (props.location.pathname === "/") {
@@ -18,13 +23,18 @@ const Nav = (props) => {
 
   return (
     <nav>
-      <button onClick={() => push("/dashboard")}>Home</button>
-      <button onClick={() => push("/post")}>New Post</button>
-      <button onClick={() => push("/chat")}>Chat</button>
-      <button onClick={() => push("/")}>Logout</button>
+      <div className={classes.backgroundImg}>
+        <Button onClick={() => push("/dashboard")}>Home</Button>
+        <Button onClick={() => push("/post")}>New Post</Button>
+        <Button onClick={() => push("/chat")}>Chat</Button>
+        <Button onClick={() => push("/")}>Logout</Button>
+        <div>
+          Hey, {props.user.username}!
+        </div>
+      </div>
     </nav>
   );
 };
 
 const mapStateToProps = (reduxState) => reduxState;
-export default connect(mapStateToProps, { getUser })(withRouter(Nav));
+export default connect(mapStateToProps)(withRouter(Nav));
