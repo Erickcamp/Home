@@ -14,6 +14,6 @@ export default (
         <Route path='/dashboard' component={Dashboard} />
         <Route path='/post' component={Post} />
         <Route path='/register' component={Register} />
-        <Route path='/view' component={View} />
+        <Route path='/posts/:id' component={View} />
     </Switch>
 )
