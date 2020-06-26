@@ -8,25 +8,36 @@ import {
   TextField,
   Card,
   CardContent,
+  CircularProgress
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   backgroundImg: {
     backgroundImage: "linear-gradient(to top, #a8edea 0%, #fed6e3 100%)",
     width: "100vw",
-    position: "absolute",
   },
 
   posts: {
     display: "flex",
     flexDirection: "column",
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   root: {
     width: "40vw",
-    margin: '5px'
+    margin: "5px",
+    backgroundColor: "#eef1f5",
+  },
+
+  searchBox: {
+    position: "absolute",
+    right: "500px",
+    top: "0px",
+  },
+
+  content: {
+    overflowWrap: "break-word",
   },
 }));
 
@@ -90,7 +101,7 @@ const Dashboard = (props) => {
 
   return (
     <div className={classes.backgroundImg}>
-      <div className="searchBox">
+      <div className={classes.searchBox}>
         <TextField
           placeholder="Search by Title"
           onChange={handleFilter}
@@ -111,11 +122,12 @@ const Dashboard = (props) => {
                 key={el.id}
                 onClick={() => props.history.push(`/posts/${el.id}`)}
               >
-                <div className="content_posts dashboard_post_box">
+                <div className={classes.content}>
                   <CardContent>
-                    <h3>{el.title}</h3>
-                    <p>Posted by: {el.username}</p>
-                    <p>{el.content}</p>
+                    <h3>
+                      {el.title} posted by: {el.username}
+                    </h3>
+                    <label>{el.content}</label>
                   </CardContent>
                 </div>
               </Card>
@@ -123,8 +135,7 @@ const Dashboard = (props) => {
           })
         ) : (
           <div className="load_box">
-            <div className="load_background"></div>
-            <div className="load"></div>
+            <CircularProgress />
           </div>
         )}
       </div>
