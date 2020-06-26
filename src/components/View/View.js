@@ -14,6 +14,10 @@ const useStyles = makeStyles((theme) => ({
 const View = (props) => {
   const [loading, setLoading] = useState(true);
   const [post, setPost] = useState({});
+  const [title, setTitle] = useState('')
+  const [img, setImg] = useState('')
+  const [content, setContent] = useState('')
+  const [author_id, setAuthor] = useState('null')
   const classes = useStyles();
 
   useEffect(() => {
@@ -30,6 +34,28 @@ const View = (props) => {
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  function deletePost() {
+    axios
+    .delete(`/api/posts/${props.match.params.id}`)
+    .then((res) => {
+      props.history.push('/dashboard')
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+
+  function editPost() {
+    axios
+    .put(`/api/posts/${props.match.params.id}`, {title, img, content, author_id})
+    .then((res) => {
+      
+    })
+    .catch((err) => {
+      console.log(err)
+    })
   }
 
   return (
@@ -52,6 +78,8 @@ const View = (props) => {
           <div className="load"></div>
         </div>
       )}
+      <button onClick={deletePost}>Delete</button>
+      <button onClick={editPost}>Edit</button>
     </div>
   );
 };

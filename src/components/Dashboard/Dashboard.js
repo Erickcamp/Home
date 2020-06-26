@@ -1,14 +1,32 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import { makeStyles, useTheme, Button, TextField } from "@material-ui/core";
+import {
+  makeStyles,
+  useTheme,
+  Button,
+  TextField,
+  Card,
+  CardContent,
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   backgroundImg: {
     backgroundImage: "linear-gradient(to top, #a8edea 0%, #fed6e3 100%)",
-    height: "100vh",
     width: "100vw",
     position: "absolute",
+  },
+
+  posts: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
+  root: {
+    width: "40vw",
+    margin: '5px'
   },
 }));
 
@@ -83,21 +101,24 @@ const Dashboard = (props) => {
         <span>My Posts</span>
         <input type="checkbox" onChange={checkboxHandler} checked={userposts} />
       </div>
-      <div className="posts">
+      <div className={classes.posts}>
         {!loading ? (
           posts.map((el) => {
             return (
-              <div
+              <Card
+                className={classes.root}
+                variant="outlined"
                 key={el.id}
                 onClick={() => props.history.push(`/posts/${el.id}`)}
               >
                 <div className="content_posts dashboard_post_box">
-                  <h3>{el.title}</h3>
-                  <div className="username_box">
+                  <CardContent>
+                    <h3>{el.title}</h3>
                     <p>Posted by: {el.username}</p>
-                  </div>
+                    <p>{el.content}</p>
+                  </CardContent>
                 </div>
-              </div>
+              </Card>
             );
           })
         ) : (
