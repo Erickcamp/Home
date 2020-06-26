@@ -69,17 +69,7 @@ const View = (props) => {
   }
 
   function editPost() {
-    axios
-      .put(`/api/posts/${props.match.params.id}`, {
-        title,
-        img,
-        content,
-        author_id,
-      })
-      .then((res) => {})
-      .catch((err) => {
-        console.log(err);
-      });
+    props.history.push(`/api/posts/`)
   }
 
   function backBtn() {
