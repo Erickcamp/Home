@@ -18,9 +18,8 @@ const Chat = (props) => {
   const [message, setMessage] = useState("");
   const [username, setUsername] = useState("");
   const [userTyping, setUserTyping] = useState(false);
-  const socket = io('http://localhost:4000');
+  const socket = io("http://localhost:4000");
 
- 
   socket.on("global response", (data) => updateMessages(data));
   socket.on("room response", (data) => updateMessages(data));
   // props.socket.on("typing", () => setTyping());
@@ -30,7 +29,7 @@ const Chat = (props) => {
     if (props.room !== "gloabl") {
       socket.emit("join room", { room: props.room });
     }
-  }, []);
+  });
 
   function handleMessage(e) {
     setMessage(e.target.value);
@@ -79,9 +78,10 @@ const Chat = (props) => {
   return (
     <div className={classes.backgroundImg}>
       <div>
-        {messages.map((message, i) => {
+        <h2 className="welcome-message">Welcome, {props.user.username}</h2>
+        {messages.map((message) => {
           return (
-            <div key={i}>
+            <div key={message}>
               <h5>{message.username}</h5>
               <p>{message.message}</p>
             </div>
@@ -89,7 +89,6 @@ const Chat = (props) => {
         })}
         <div className={"inputs"}>
           <>
-            <h2 className="welcome-message">Welcome, {props.user.username}</h2>
             <input
               type="text"
               placeholder="Type Message Here"
@@ -109,8 +108,8 @@ const Chat = (props) => {
 };
 
 Chat.propTypes = {
-  room: PropTypes.string
-}
+  room: PropTypes.string,
+};
 
 const mapStateToProps = (reduxState) => reduxState;
 export default connect(mapStateToProps)(Chat);
