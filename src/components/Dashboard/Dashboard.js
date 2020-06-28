@@ -8,7 +8,8 @@ import {
   TextField,
   Card,
   CardContent,
-  CircularProgress
+  CircularProgress,
+  Switch
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -110,7 +111,7 @@ const Dashboard = (props) => {
         <Button onClick={searchPosts}>Search</Button>
         <Button onClick={resetState}>Reset</Button>
         <span>My Posts</span>
-        <input type="checkbox" onChange={checkboxHandler} checked={userposts} />
+        <Switch color='secondary' onChange={checkboxHandler} checked={userposts} />
       </div>
       <div className={classes.posts}>
         {!loading ? (

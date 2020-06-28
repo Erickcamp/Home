@@ -69,7 +69,18 @@ const View = (props) => {
   }
 
   function editPost() {
-    props.history.push(`/api/posts/`)
+    axios
+      .put(`/api/posts/${props.match.params.id}`, {
+        title,
+        img,
+        content,
+        author_id,
+      })
+      .then((res) => {})
+      props.history.push('/dashboard')
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   function backBtn() {
@@ -83,6 +94,7 @@ const View = (props) => {
           <CardContent>
             <h2 className="title">{post.title} by: {post.username}</h2>
             <p>{post.content}</p>
+            <p>{post.img}</p>
           </CardContent>
         </Card>
       ) : (
