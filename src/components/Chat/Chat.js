@@ -10,6 +10,38 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
     width: "100vw",
   },
+
+  h2: {
+    margin: "0px",
+  },
+
+  room: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    height: "800px",
+    width: "350px",
+    // border: $lightGray solid
+  },
+
+  messages: {
+    height: "80%",
+    width: "90%",
+    margin: "1rem",
+    background: "lightgray",
+    position: "relative",
+  },
+
+  message: {
+    display: "flex",
+    justifyContent: "space-between",
+    margin: ".5rem",
+    marginRight: "3rem",
+  },
+
+  input: {
+    display: "block",
+  },
 }));
 
 const Chat = (props) => {
@@ -20,31 +52,34 @@ const Chat = (props) => {
   const [userTyping, setUserTyping] = useState(false);
   const socket = io("http://localhost:4000");
 
-  socket.on("global response", (data) => updateMessages(data));
-  socket.on("room response", (data) => updateMessages(data));
+  useEffect(() => {
+    socket.on("global response", (data) => {
+      console.log('global response: ', data)
+      setMessages(data)
+    });
+    socket.on("room response", (data) => {
+      //3
+      setMessages(data)
+    }); 
+  }, [])
   // props.socket.on("typing", () => setTyping());
   // props.socket.on("stopped typing", () => stopTyping());
 
   useEffect(() => {
-    if (props.room !== "gloabl") {
-      socket.emit("join room", { room: props.room });
-    }
-  });
+    // if (props.room !== "global") {
+      socket.emit("join room", { room: "global", user: props.user.username });
+    // }
+  }, []);
 
   function handleMessage(e) {
     setMessage(e.target.value);
   }
 
-  function updateMessages(data) {
-    setMessages([
-      ...messages,
-      { message: data.message, username: data.username },
-    ]);
-  }
 
   function broadcast() {
+    //1
     socket.emit(
-      `broadcast to ${props.room !== "global" ? "room" : "global"} socket`,
+      'broadcast to room socket',
       {
         message: message,
         username: props.user.username,
@@ -77,11 +112,11 @@ const Chat = (props) => {
 
   return (
     <div className={classes.backgroundImg}>
-      <div>
-        <h2 className="welcome-message">Welcome, {props.user.username}</h2>
-        {messages.map((message) => {
+      <div className={classes.room}>
+        <h2 className={classes.h2}>Welcome, {props.user.username}</h2>
+        {messages.map((message, index) => {
           return (
-            <div key={message}>
+            <div key={index}>
               <h5>{message.username}</h5>
               <p>{message.message}</p>
             </div>
@@ -89,16 +124,16 @@ const Chat = (props) => {
         })}
         <div className={"inputs"}>
           <>
-            <input
+            <TextField
               type="text"
               placeholder="Type Message Here"
               value={message}
               onChange={handleMessage}
             />
             <div className="buttons">
-              <button onClick={broadcast}>Broadcast</button>
-              <button onClick={emit}>Emit</button>
-              <button onClick={blast}>Blast</button>
+              <Button onClick={broadcast}>Broadcast</Button>
+              <Button onClick={emit}>Emit</Button>
+              <Button onClick={blast}>Blast</Button>
             </div>
           </>
         </div>

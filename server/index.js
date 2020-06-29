@@ -6,6 +6,7 @@ const app = express()
 const authCtrl = require('./controllers/authController')
 const postCtrl = require('./controllers/postController')
 const socket = require('socket.io')
+const messages = []
 
 const {SESSION_SECRET, SERVER_PORT, CONNECTION_STRING} = process.env
 
@@ -43,8 +44,6 @@ const server = app.listen(SERVER_PORT, () => {
 const io = socket(server)
 
 io.on('connection', socket => {
-    console.log('socket connected')
-  
     // GLOBAL SOCKETS
     socket.on('broadcast to global socket', data => {
       console.log(`global broadcast hit`)
@@ -62,6 +61,7 @@ io.on('connection', socket => {
     })
   
     socket.on('typing', data => {
+      console.log('typing', data)
       if (data.room !== 'global') {
         socket.to(data.room).broadcast.emit('typing')
       } else {
@@ -70,7 +70,7 @@ io.on('connection', socket => {
     })
   
     socket.on('stopped typing', data => {
-      console.log(data)
+      console.log('stopped typing', data)
       if (data.room !== 'global') {
         socket.to(data.room).broadcast.emit('stopped typing')
       }
@@ -79,19 +79,23 @@ io.on('connection', socket => {
   
     // ROOM SOCKETS
     socket.on('join room', data => {
+      console.log('join room', data)
       socket.join(data.room)
     })
   
     socket.on('broadcast to room socket', data => {
-      console.log(`broadcast to room ${data.room}`)
-      socket.to(data.room).broadcast.emit('room response', data)
+      //2
+      //this is sending to the client
+      messages.push(data)
+      socket.to("global").broadcast.emit('room response', messages)
     })
+
     socket.on('emit to room socket', data => {
-      console.log(`emit to room ${data.room}`)
+      console.log(`emit to room ${data}`)
       socket.emit('room response', data)
     })
     socket.on('blast to room socket', data => {
-      console.log(`blast to room ${data.room}`)
+      console.log(`blast to room ${data}`)
       io.to(data.room).emit('room response', data)
     })
   })
