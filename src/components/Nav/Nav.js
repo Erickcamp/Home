@@ -36,9 +36,6 @@ const Nav = (props) => {
     return null;
   }
 
-  console.log(props.user.username);
-  if (props.user.username === "") push("/");
-
   return (
     <nav>
       <div className={classes.backgroundImg}>
