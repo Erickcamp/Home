@@ -49,7 +49,7 @@ const Chat = (props) => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const [joined, setJoined] = useState(false);
-  const socket = io(process.env.REACT_APP_SERVER_PORT);
+  const socket = io(process.env.REACT_APP_SERVER_PORT)
 
   socket.on("global response", (data) => {
     console.log("global response: ", data);
@@ -66,8 +66,15 @@ const Chat = (props) => {
       socket.emit("join room", { room: "global", user: props.user.username });
       setJoined(true);
     }
-    return () => socket.close();
   }, [socket, props.user.username, joined]);
+
+  // useEffect(()=>{
+  //   const closeTheThing = () => socket.close()
+  //   return ()=>{
+  //     console.log('closing chat')
+  //     closeTheThing()
+  //   }
+  // }, [])
 
   function handleMessage(e) {
     setMessage(e.target.value);
