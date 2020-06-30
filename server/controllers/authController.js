@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const {sendEmail} = require('../controllers/utils/registerEmailUtil')
 
 module.exports = {
   login: async (req, res) => {
@@ -40,6 +41,8 @@ module.exports = {
       userId: registerUser[0].id,
       username: registerUser[0].username,
     };
+
+    sendEmail(req)
     
     res.status(200).send(req.session.user);
   },
