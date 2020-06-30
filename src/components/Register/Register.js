@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { loginUser } from "../../ducks/reducer";
-import { makeStyles, useTheme, TextField, Button } from "@material-ui/core";
-import { toast } from "react-toastify"
-
+import { makeStyles, TextField, Button } from "@material-ui/core";
+import { toast } from "react-toastify";
 
 const useStyles = makeStyles((theme) => ({
   backgroundImg: {
@@ -16,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 
   registerInfo: {
     width: "100vw",
-    height: '60vh',
+    height: "60vh",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-evenly",
@@ -120,11 +119,7 @@ const Register = (props) => {
           value={confirmPassword}
           onChange={handleConfirm}
         />
-        <TextField
-          placeholder="email"
-          value={email}
-          onChange={handleEmail}
-        />
+        <TextField placeholder="email" value={email} onChange={handleEmail} />
         <TextField
           placeholder="first name"
           value={first_name}

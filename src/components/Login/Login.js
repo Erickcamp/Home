@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { loginUser } from "../../ducks/reducer";
-import { makeStyles, useTheme, TextField, Button } from "@material-ui/core";
-import { toast } from "react-toastify"
+import { makeStyles, TextField, Button } from "@material-ui/core";
+import { toast } from "react-toastify";
 
 const useStyles = makeStyles((theme) => ({
   backgroundImg: {
@@ -100,7 +100,7 @@ const Login = (props) => {
             onChange={handlePassword}
           />
         </div>
-        <Button onClick={login} className={classes.loginBtn}>
+        <Button type="submit" onClick={login} className={classes.loginBtn}>
           Login
         </Button>
         <Button onClick={register} className={classes.loginBtn}>

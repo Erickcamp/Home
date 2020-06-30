@@ -3,13 +3,11 @@ import axios from "axios";
 import { connect } from "react-redux";
 import {
   makeStyles,
-  useTheme,
   Button,
   TextField,
   Card,
   CardContent,
   CircularProgress,
-  Switch
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -33,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 
   searchBox: {
     position: "absolute",
-    right: "500px",
+    right: "800px",
     top: "0px",
   },
 
@@ -46,7 +44,6 @@ const Dashboard = (props) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("");
-  const [userposts, setUserposts] = useState(true);
   const classes = useStyles();
 
   useEffect(() => {
@@ -92,14 +89,6 @@ const Dashboard = (props) => {
     setFilter(e.target.value);
   }
 
-  const checkboxHandler = () => {
-    if (userposts) {
-      setUserposts(false);
-    } else {
-      setUserposts(true);
-    }
-  };
-
   return (
     <div className={classes.backgroundImg}>
       <div className={classes.searchBox}>
@@ -110,8 +99,6 @@ const Dashboard = (props) => {
         />
         <Button onClick={searchPosts}>Search</Button>
         <Button onClick={resetState}>Reset</Button>
-        <span>My Posts</span>
-        <Switch color='secondary' onChange={checkboxHandler} checked={userposts} />
       </div>
       <div className={classes.posts}>
         {!loading ? (

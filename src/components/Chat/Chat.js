@@ -48,66 +48,43 @@ const Chat = (props) => {
   const classes = useStyles();
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
-  const [username, setUsername] = useState("");
-  const [userTyping, setUserTyping] = useState(false);
-  const socket = io("http://localhost:4000");
+  const [joined, setJoined] = useState(false);
+  const socket = io(process.env.REACT_APP_SERVER_PORT);
+
+  socket.on("global response", (data) => {
+    console.log("global response: ", data);
+    setMessages(data);
+  });
+
+  socket.on("room response", (data) => {
+    //3
+    setMessages(data);
+  });
 
   useEffect(() => {
-    socket.on("global response", (data) => {
-      console.log('global response: ', data)
-      setMessages(data)
-    });
-    socket.on("room response", (data) => {
-      //3
-      setMessages(data)
-    }); 
-  }, [])
-  // props.socket.on("typing", () => setTyping());
-  // props.socket.on("stopped typing", () => stopTyping());
-
-  useEffect(() => {
-    // if (props.room !== "global") {
+    if (!joined) {
       socket.emit("join room", { room: "global", user: props.user.username });
-    // }
-  }, []);
+      setJoined(true);
+    }
+    return () => socket.close();
+  }, [socket, props.user.username, joined]);
 
   function handleMessage(e) {
     setMessage(e.target.value);
   }
 
+  function leave() {
+    props.history.push("/dashboard");
+  }
 
   function broadcast() {
     //1
-    socket.emit(
-      'broadcast to room socket',
-      {
-        message: message,
-        username: props.user.username,
-        room: props.room,
-      }
-    );
-  }
-
-  function emit() {
-    socket.emit(
-      `broadcast to ${props.room !== "global" ? "room" : "global"} socket`,
-      {
-        message: message,
-        username: props.user.username,
-        room: props.room,
-      }
-    );
-  }
-
-  function blast() {
-    socket.emit(
-      `broadcast to ${props.room !== "global" ? "room" : "global"} socket`,
-      {
-        message: message,
-        username: props.user.username,
-        room: props.room,
-      }
-    );
+    socket.emit("broadcast to room socket", {
+      message: message,
+      username: props.user.username,
+      room: props.room,
+    });
+    setMessage("");
   }
 
   return (
@@ -123,7 +100,7 @@ const Chat = (props) => {
           );
         })}
         <div className={"inputs"}>
-          <>
+          <form onSubmit={(e) => e.preventDefault()}>
             <TextField
               type="text"
               placeholder="Type Message Here"
@@ -131,11 +108,12 @@ const Chat = (props) => {
               onChange={handleMessage}
             />
             <div className="buttons">
-              <Button onClick={broadcast}>Broadcast</Button>
-              <Button onClick={emit}>Emit</Button>
-              <Button onClick={blast}>Blast</Button>
+              <Button type="submit" onClick={broadcast}>
+                Send
+              </Button>
+              <Button onClick={leave}>Leave</Button>
             </div>
-          </>
+          </form>
         </div>
       </div>
     </div>
