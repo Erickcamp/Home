@@ -8,6 +8,8 @@ const postCtrl = require("./controllers/postController");
 
 const { SESSION_SECRET, SERVER_PORT, CONNECTION_STRING } = process.env;
 
+app.use(express.static(`${__dirname}/../build`));
+
 app.use(express.json());
 app.use(
   session({
