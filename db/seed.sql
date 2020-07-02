@@ -11,7 +11,7 @@ create table posts(
 id serial primary key,
 title varchar(100),
 img text,
-content varchar(500),
+content varchar(5000),
 author_id integer REFERENCES users(id)
 );
 
