@@ -9,9 +9,9 @@ username varchar(20)
 
 create table posts(
 id serial primary key,
-title varchar(25),
+title varchar(100),
 img text,
-content varchar(200),
+content varchar(500),
 author_id integer REFERENCES users(id)
 );
 
