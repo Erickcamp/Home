@@ -23,6 +23,16 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     margin: "0 auto",
   },
+
+  container: {
+   width: '60vw',
+   border: 'solid',
+   marginLeft: '20vw',
+   borderWidth: '2px',
+   borderColor: 'ghostwhite',
+   marginTop: '10px',
+   fontSize: 'large'
+  }
 }));
 
 const Register = (props) => {
@@ -88,19 +98,18 @@ const Register = (props) => {
 
   return (
     <div className={classes.backgroundImg}>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed purus nibh,
-        feugiat et nunc molestie, pretium bibendum ante. Pellentesque aliquet
-        mauris sed purus consequat, a faucibus leo tempor. Phasellus eget
-        pulvinar erat, in elementum lectus. Donec ut molestie elit, eget aliquam
-        justo. Sed euismod feugiat arcu. Cras at lorem sed orci convallis
-        congue. Nullam lacus sem, gravida et neque in, volutpat mattis risus.
-        Nulla facilisi. Vestibulum nec rutrum ex. Fusce ullamcorper, felis at
-        semper fermentum, neque neque facilisis nunc, vel maximus neque urna in
-        est. Sed volutpat, augue in congue rhoncus, tortor justo efficitur orci,
-        in fringilla est dui vel lacus. Mauris sed condimentum nibh. Etiam id
-        pulvinar orci.
-      </p>
+      <div className={classes.container}>
+        <p>
+          Welcome Home! This is a social media site dedicated to all of those
+          fighting cancer. Whether you just got diagnosed, you are currently
+          fighting it, or have won the battle, this is a home to come to and a
+          family to have. The goal is if you are newly diagnosed, you have
+          answers and support. If you are alone, you have a family and a place
+          to call home. Cancer is a unfortunate part of our reality, but that
+          dosent mean we need to fight it alone. When you get too tired, rest
+          and let us fight for you.
+        </p>
+      </div>
       <div className={classes.registerInfo}>
         <TextField
           placeholder="username"

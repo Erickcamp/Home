@@ -26,6 +26,11 @@ const useStyles = makeStyles((theme) => ({
     margin: "5px",
     backgroundColor: "#eef1f5",
     overflowWrap: "break-word",
+    padding: '20px',
+    '& img': {
+      width:'100%',
+      objectFit: 'cover'
+    }
   },
 
   btns: {
@@ -142,11 +147,11 @@ const View = (props) => {
             </div>
           ) : (
             <div>
-              <h2 className="title">
+              <h2>
                 {post.title} by: {post.username}
               </h2>
               <p>{post.content}</p>
-              <p>{post.img}</p>
+              <img src={post.img} alt='post img'/>
             </div>
           )}
         </CardContent>

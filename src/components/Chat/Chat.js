@@ -7,40 +7,50 @@ import { connect } from "react-redux";
 const useStyles = makeStyles((theme) => ({
   backgroundImg: {
     backgroundImage: "linear-gradient(to top, #a8edea 0%, #fed6e3 100%)",
-    height: "100vh",
+    height: "95vh",
     width: "100vw",
-  },
-
-  h2: {
-    margin: "0px",
+    display: "flex",
   },
 
   room: {
+    flex: 1,
     display: "flex",
     flexDirection: "column",
+    height: "80vh",
+    margin: "0px",
     alignItems: "center",
-    height: "800px",
-    width: "350px",
-    // border: $lightGray solid
+    overflowY: 'scroll',
+    overscrollBehaviorY: 'contain',
+    scrollSnapType:'y',
+      "& > div:last-child": {
+        scrollSnapAlign: 'end'
+      }
   },
 
   messages: {
-    height: "80%",
-    width: "90%",
-    margin: "1rem",
-    background: "lightgray",
-    position: "relative",
-  },
-
-  message: {
-    display: "flex",
-    justifyContent: "space-between",
-    margin: ".5rem",
-    marginRight: "3rem",
+    wordBreak: "break-all",
+    borderWidth: "3px",
+    borderColor: "black",
+    borderRight: "solid",
+    borderLeft: "solid",
+    borderTop: "solid",
+    borderBottom: "solid",
+    margin: "3px",
+    width: "50vw",
   },
 
   input: {
-    display: "block",
+    position: "absolute",
+    bottom: "30px",
+    right: "500px",
+    width: "50%",
+    border: "1px solid black",
+  },
+
+  btns: {
+    position: "absolute",
+    bottom: "30px",
+    right: "360px",
   },
 }));
 
@@ -49,7 +59,7 @@ const Chat = (props) => {
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const [joined, setJoined] = useState(false);
-  const socket = io(process.env.REACT_APP_SERVER_PORT)
+  const socket = io(process.env.REACT_APP_SERVER_PORT);
 
   socket.on("global response", (data) => {
     console.log("global response: ", data);
@@ -97,24 +107,25 @@ const Chat = (props) => {
   return (
     <div className={classes.backgroundImg}>
       <div className={classes.room}>
-        <h2 className={classes.h2}>Welcome, {props.user.username}</h2>
         {messages.map((message, index) => {
           return (
-            <div key={index}>
-              <h5>{message.username}</h5>
-              <p>{message.message}</p>
+            <div key={index} className={classes.messages}>
+                <h5>{message.username}:</h5>
+                <p>{message.message}</p>
             </div>
           );
         })}
-        <div className={"inputs"}>
+        </div>
+        <div>
           <form onSubmit={(e) => e.preventDefault()}>
             <TextField
               type="text"
-              placeholder="Type Message Here"
+              placeholder="Type Message Here..."
               value={message}
               onChange={handleMessage}
+              className={classes.input}
             />
-            <div className="buttons">
+            <div className={classes.btns}>
               <Button type="submit" onClick={broadcast}>
                 Send
               </Button>
@@ -123,7 +134,6 @@ const Chat = (props) => {
           </form>
         </div>
       </div>
-    </div>
   );
 };
 

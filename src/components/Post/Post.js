@@ -26,7 +26,8 @@ const useStyles = makeStyles((theme) => ({
 
   root: {
     width: "60vw",
-    margin: "5px",
+    margin: "40px 0px",
+    padding: '40px 20px',
     backgroundColor: "#eef1f5",
     overflowWrap: "break-word",
   },
@@ -34,6 +35,10 @@ const useStyles = makeStyles((theme) => ({
   btns: {
     flexDirection: "row",
   },
+
+  input: {
+    width: '100%'
+  }
 }));
 
 const Post = (props) => {
@@ -72,17 +77,22 @@ const Post = (props) => {
 
   return (
     <div className={classes.backgroundImg}>
+      <div className={classes.btns}>
       <Card className={classes.root}>
         <CardContent>
-          <label>Post Title:</label>
-          <TextField value={title} onChange={handleTitle} />
-          <label>Image URL:</label>
-          <TextField value={img} onChange={handleImg} />
-          <label>Post Content:</label>
-          <TextField value={content} onChange={handleContent} />
+          <TextField value={title} onChange={handleTitle} placeholder='Post Title...' className={classes.input} id="outlined-basic" label="Post Title..." variant="outlined" multiline rows={2}  />
         </CardContent>
       </Card>
-      <div className={classes.btns}>
+      <Card className={classes.root}>
+        <CardContent>
+          <TextField value={img} onChange={handleImg} placeholder='Image URL...' className={classes.input} id="outlined-basic" label="Img..." variant="outlined" multiline rows={2}  />
+        </CardContent>
+      </Card>
+      <Card className={classes.root}>
+        <CardContent>
+          <TextField value={content} onChange={handleContent} placeholder='Post Content...' className={classes.input} id="outlined-basic" label="Post Content..." variant="outlined" multiline rows={4}  />
+        </CardContent>
+      </Card>
         <Button onClick={handleSubmit}>Submit</Button>
         <Button onClick={cancel}>Cancel</Button>
       </div>

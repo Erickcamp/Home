@@ -9,6 +9,7 @@ import {
   CardContent,
   CircularProgress,
 } from "@material-ui/core";
+import {Chat, Reply, Favorite} from '@material-ui/icons'
 
 const useStyles = makeStyles((theme) => ({
   backgroundImg: {
@@ -27,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     width: "40vw",
     margin: "5px",
     backgroundColor: "#eef1f5",
+    padding: '20px'
   },
 
   searchBox: {
@@ -37,13 +39,30 @@ const useStyles = makeStyles((theme) => ({
 
   content: {
     overflowWrap: "break-word",
+      '& img': {
+        width:'100%',
+        objectFit: 'cover'
+      }
   },
+
+  actions: {
+    padding:'10px 20px',
+    display: 'flex',
+    alignItems: 'center'
+  },
+
+  actionBox: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center'
+  }
 }));
 
 const Dashboard = (props) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("");
+  const [increment, setIncrement] = useState(0)
   const classes = useStyles();
 
   useEffect(() => {
@@ -89,11 +108,15 @@ const Dashboard = (props) => {
     setFilter(e.target.value);
   }
 
+  function incrementHandler() {
+    setIncrement(increment + 1)
+  }
+
   return (
     <div className={classes.backgroundImg}>
       <div className={classes.searchBox}>
         <TextField
-          placeholder="Search by Title"
+          placeholder="Search Posts Title..."
           onChange={handleFilter}
           value={filter}
         />
@@ -115,7 +138,14 @@ const Dashboard = (props) => {
                     <h3>
                       {el.title} posted by: {el.username}
                     </h3>
-                    <label>{el.content}</label>
+                    <p>{el.content}</p>
+                    <img src={el.img} alt='post img'/>
+                    <hr />
+                    <div className={classes.actionBox}>
+                      <a href='#' className={classes.actions}><Favorite />Like</a>
+                      <a href='#' className={classes.actions}><Chat />Comment</a>
+                      <a href='#' className={classes.actions}><Reply />Share</a>
+                    </div>
                   </CardContent>
                 </div>
               </Card>
