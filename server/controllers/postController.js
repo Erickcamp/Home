@@ -41,6 +41,7 @@ module.exports = {
         })
         .catch((err) => {
           res.status(500).send(err);
+          console.log(err, 'this is error')
         });
     },
     editPost: (req, res) => {
