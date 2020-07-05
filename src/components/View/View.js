@@ -22,19 +22,23 @@ const useStyles = makeStyles((theme) => ({
   },
 
   root: {
-    width: "50vw",
-    margin: "5px",
+    width: "60vw",
+    margin: "40px 0px",
+    padding: "40px 20px",
     backgroundColor: "#eef1f5",
     overflowWrap: "break-word",
-    padding: '20px',
-    '& img': {
-      width:'100%',
-      objectFit: 'cover'
-    }
+    "& img": {
+      width: "100%",
+      objectFit: "cover",
+    },
   },
 
   btns: {
     flexDirection: "row",
+  },
+
+  input: {
+    width: "100%",
   },
 }));
 
@@ -129,33 +133,67 @@ const View = (props) => {
 
   return (
     <div className={classes.backgroundImg}>
-      <Card className={classes.root}>
-        <CardContent>
-          {editMode ? (
-            <div>
+      {editMode ? (
+        <div>
+          <Card className={classes.root}>
+            <CardContent>
               <TextField
-                placeholder="title"
                 value={title}
                 onChange={titleHandler}
+                placeholder="Title"
+                className={classes.input}
+                id="outlined-basic"
+                label="Title"
+                variant="outlined"
+                multiline
+                rows={2}
               />
-              <TextField placeholder="img" value={img} onChange={imgHandler} />
+            </CardContent>
+          </Card>
+          <Card className={classes.root}>
+            <CardContent>
               <TextField
-                placeholder="content"
-                value={content}
-                onChange={contentHandler}
+               value={img}
+               onChange={imgHandler}
+               placeholder="Image"
+               className={classes.input}
+               id="outlined-basic"
+               label="Img"
+               variant="outlined"
+               multiline
+               rows={2}
               />
-            </div>
-          ) : (
-            <div>
+            </CardContent>
+          </Card>
+          <Card className={classes.root}>
+            <CardContent>
+              <TextField
+                 value={content}
+                 onChange={contentHandler}
+                 placeholder="Content"
+                 className={classes.input}
+                 id="outlined-basic"
+                 label="Content"
+                 variant="outlined"
+                 multiline
+                 rows={4}
+              />
+            </CardContent>
+          </Card>
+        </div>
+      ) : (
+        <div>
+          <Card>
+            <CardContent>
               <h2>
                 {post.title} by: {post.username}
               </h2>
               <p>{post.content}</p>
-              <img src={post.img} alt='post img'/>
-            </div>
-          )}
-        </CardContent>
-      </Card>
+              <img src={post.img} alt="post img" />
+            </CardContent>
+          </Card>
+        </div>
+      )}
       {editMode ? (
         <div className={classes.btns}>
           <Button onClick={submitHandler}>Submit</Button>
