@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useStore } from "react-redux";
+import {connect} from 'react-redux'
 import {
   makeStyles,
   Card,
@@ -186,8 +187,9 @@ const View = (props) => {
           <Card>
             <CardContent>
               <h2>
-                {post.title} by: {post.username}
+                {post.title}
               </h2>
+              <h5>by: {post.username}</h5>
               <p>{post.content}</p>
               <img src={post.img} alt="post img" />
             </CardContent>
@@ -210,4 +212,5 @@ const View = (props) => {
   );
 };
 
-export default View;
+const mapStateToProps = (reduxState) => reduxState;
+export default connect(mapStateToProps)(View);
