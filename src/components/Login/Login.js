@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { connect } from "react-redux";
-import { loginUser } from "../../ducks/reducer";
-import { makeStyles, TextField, Button } from "@material-ui/core";
-import { toast } from "react-toastify";
+import React, { useState } from "react"
+import axios from "axios"
+import { connect } from "react-redux"
+import { loginUser } from "../../ducks/userReducer"
+import { makeStyles, TextField, Button } from "@material-ui/core"
+import { toast } from "react-toastify"
 
 const useStyles = makeStyles((theme) => ({
   backgroundImg: {
@@ -50,37 +50,37 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "150px",
     fontSize: "40px",
   },
-}));
+}))
 
 const Login = (props) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const classes = useStyles();
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const classes = useStyles()
 
   function handleUsername(e) {
-    setUsername(e.target.value);
+    setUsername(e.target.value)
   }
 
   function handlePassword(e) {
-    setPassword(e.target.value);
+    setPassword(e.target.value)
   }
 
   function login(e) {
-    e.preventDefault();
+    e.preventDefault()
     axios
       .post("/auth/login", { username, password })
       .then((res) => {
-        props.loginUser(res.data);
-        props.history.push("/dashboard");
+        props.loginUser(res.data)
+        props.history.push("/dashboard")
       })
       .catch((err) => {
-        toast.error("Incorrect username or password");
-        console.log(err);
-      });
+        toast.error("Incorrect username or password")
+        console.log(err)
+      })
   }
 
   function register() {
-    props.history.push("/register");
+    props.history.push("/register")
   }
 
   return (
@@ -88,32 +88,28 @@ const Login = (props) => {
       <form onSubmit={(e) => login(e)} className={classes.formContainer}>
         <h1>Welcome Home</h1>
         <div className={classes.loginInfo}>
+          <TextField placeholder='username' value={username} onChange={handleUsername} />
           <TextField
-            placeholder="username"
-            value={username}
-            onChange={handleUsername}
-          />
-          <TextField
-            placeholder="password"
-            type="password"
+            placeholder='password'
+            type='password'
             value={password}
             onChange={handlePassword}
           />
         </div>
-        <Button type="submit" onClick={login} className={classes.loginBtn}>
+        <Button type='submit' onClick={login} className={classes.loginBtn}>
           Login
         </Button>
         <Button onClick={register} className={classes.loginBtn}>
           Register
         </Button>
         <p className={classes.quote}>
-          "You beat cancer by how you live, why you live, and the manner in
-          which you live.” - Stuart Scott
+          "You beat cancer by how you live, why you live, and the manner in which you live.” -
+          Stuart Scott
         </p>
       </form>
     </div>
-  );
-};
+  )
+}
 
-const mapStateToProps = (reduxState) => reduxState;
-export default connect(mapStateToProps, { loginUser })(Login);
+const mapStateToProps = (reduxState) => reduxState
+export default connect(mapStateToProps, { loginUser })(Login)

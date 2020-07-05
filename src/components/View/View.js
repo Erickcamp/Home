@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { useStore } from "react-redux";
-import {connect} from 'react-redux'
+import React, { useState, useEffect } from "react"
+import axios from "axios"
+import { useStore } from "react-redux"
+import { connect } from "react-redux"
 import {
   makeStyles,
   Card,
@@ -9,7 +9,7 @@ import {
   Button,
   CircularProgress,
   TextField,
-} from "@material-ui/core";
+} from "@material-ui/core"
 
 const useStyles = makeStyles((theme) => ({
   backgroundImg: {
@@ -41,20 +41,20 @@ const useStyles = makeStyles((theme) => ({
   input: {
     width: "100%",
   },
-}));
+}))
 
 const View = (props) => {
   // const [myPostData, setMyPostData] = useState({title: '', img: '', content: '', author_id: ''})
-  const [loading, setLoading] = useState(true);
-  const [post, setPost] = useState({});
-  const [title, setTitle] = useState("");
-  const [img, setImg] = useState("");
-  const [content, setContent] = useState("");
-  const [editMode, setEditMode] = useState(false);
-  const {
-    user: { userId },
-  } = useStore().getState();
-  const classes = useStyles();
+  const [loading, setLoading] = useState(true)
+  const [post, setPost] = useState({})
+  const [title, setTitle] = useState("")
+  const [img, setImg] = useState("")
+  const [content, setContent] = useState("")
+  const [editMode, setEditMode] = useState(false)
+  // const {
+  //   user: { userId },
+  // } = useStore().getState();
+  const classes = useStyles()
 
   //axios call to update new post
   //axios.post('/api/updatepost', myPostData)
@@ -64,30 +64,30 @@ const View = (props) => {
       axios
         .get(`/api/posts/${props.match.params.id}`)
         .then((res) => {
-          setPost(res.data);
-          setImg(res.data.img);
-          setTitle(res.data.title);
-          setContent(res.data.content);
+          setPost(res.data)
+          setImg(res.data.img)
+          setTitle(res.data.title)
+          setContent(res.data.content)
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err)
         })
         .finally(() => {
-          setLoading(false);
-        });
+          setLoading(false)
+        })
     }
-    selectedPost();
-  }, [props.match.params.id]);
+    selectedPost()
+  }, [props.match.params.id])
 
   function deletePost() {
     axios
       .delete(`/api/posts/${props.match.params.id}`)
       .then((res) => {
-        props.history.push("/dashboard");
+        props.history.push("/dashboard")
       })
       .catch((err) => {
-        console.log(err);
-      });
+        console.log(err)
+      })
   }
 
   function submitHandler() {
@@ -96,41 +96,41 @@ const View = (props) => {
         title,
         img,
         content,
-        author_id: userId,
+        author_id: props.userReducer.user.userId,
       })
       .then((res) => {
-        props.history.push("/dashboard");
+        props.history.push("/dashboard")
       })
       .catch((err) => {
-        console.log(err);
-      });
+        console.log(err)
+      })
   }
 
   function editPost() {
-    setEditMode(true);
+    setEditMode(true)
   }
 
   function backBtn() {
-    props.history.push("/dashboard");
+    props.history.push("/dashboard")
   }
 
   function cancel() {
-    props.history.push("/dashboard");
+    props.history.push("/dashboard")
   }
 
   function titleHandler(e) {
-    setTitle(e.target.value);
+    setTitle(e.target.value)
   }
 
   function imgHandler(e) {
-    setImg(e.target.value);
+    setImg(e.target.value)
   }
 
   function contentHandler(e) {
-    setContent(e.target.value);
+    setContent(e.target.value)
   }
 
-  if (loading) return <CircularProgress />;
+  if (loading) return <CircularProgress />
 
   return (
     <div className={classes.backgroundImg}>
@@ -141,11 +141,11 @@ const View = (props) => {
               <TextField
                 value={title}
                 onChange={titleHandler}
-                placeholder="Title"
+                placeholder='Title'
                 className={classes.input}
-                id="outlined-basic"
-                label="Title"
-                variant="outlined"
+                id='outlined-basic'
+                label='Title'
+                variant='outlined'
                 multiline
                 rows={2}
               />
@@ -154,30 +154,30 @@ const View = (props) => {
           <Card className={classes.root}>
             <CardContent>
               <TextField
-               value={img}
-               onChange={imgHandler}
-               placeholder="Image"
-               className={classes.input}
-               id="outlined-basic"
-               label="Img"
-               variant="outlined"
-               multiline
-               rows={2}
+                value={img}
+                onChange={imgHandler}
+                placeholder='Image'
+                className={classes.input}
+                id='outlined-basic'
+                label='Img'
+                variant='outlined'
+                multiline
+                rows={2}
               />
             </CardContent>
           </Card>
           <Card className={classes.root}>
             <CardContent>
               <TextField
-                 value={content}
-                 onChange={contentHandler}
-                 placeholder="Content"
-                 className={classes.input}
-                 id="outlined-basic"
-                 label="Content"
-                 variant="outlined"
-                 multiline
-                 rows={4}
+                value={content}
+                onChange={contentHandler}
+                placeholder='Content'
+                className={classes.input}
+                id='outlined-basic'
+                label='Content'
+                variant='outlined'
+                multiline
+                rows={4}
               />
             </CardContent>
           </Card>
@@ -186,12 +186,10 @@ const View = (props) => {
         <div>
           <Card>
             <CardContent>
-              <h2>
-                {post.title}
-              </h2>
+              <h2>{post.title}</h2>
               <h5>by: {post.username}</h5>
               <p>{post.content}</p>
-              <img src={post.img} alt="post img" />
+              <img src={post.img} alt='post img' />
             </CardContent>
           </Card>
         </div>
@@ -209,8 +207,8 @@ const View = (props) => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-const mapStateToProps = (reduxState) => reduxState;
-export default connect(mapStateToProps)(View);
+const mapStateToProps = (reduxState) => reduxState
+export default connect(mapStateToProps)(View)

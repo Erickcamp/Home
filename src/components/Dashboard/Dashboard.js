@@ -1,15 +1,10 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { connect } from "react-redux";
-import {
-  makeStyles,
-  Button,
-  TextField,
-  Card,
-  CardContent,
-  CircularProgress,
-} from "@material-ui/core";
-import {Chat, Reply, Favorite} from '@material-ui/icons'
+import React, { useState, useEffect } from "react"
+import axios from "axios"
+import { connect } from "react-redux"
+import { makeStyles, Card, CardContent, CircularProgress } from "@material-ui/core"
+import { Chat, Reply, Favorite } from "@material-ui/icons"
+import { setFilter } from "../../ducks/filterReducer"
+import { setPosts } from "../../ducks/postReducer"
 
 const useStyles = makeStyles((theme) => ({
   backgroundImg: {
@@ -28,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     width: "40vw",
     margin: "5px",
     backgroundColor: "#eef1f5",
-    padding: '20px'
+    padding: "20px",
   },
 
   searchBox: {
@@ -39,132 +34,95 @@ const useStyles = makeStyles((theme) => ({
 
   content: {
     overflowWrap: "break-word",
-      '& img': {
-        width:'100%',
-        objectFit: 'cover'
-      }
+    "& img": {
+      width: "100%",
+      objectFit: "cover",
+    },
   },
 
   actions: {
-    padding:'10px 20px',
-    display: 'flex',
-    alignItems: 'center'
+    padding: "10px 20px",
+    display: "flex",
+    alignItems: "center",
   },
 
   actionBox: {
-    display: 'flex',
-    justifyContent: 'space-around',
-    alignItems: 'center'
+    display: "flex",
+    justifyContent: "space-around",
+    alignItems: "center",
   },
 
   h5: {
-    margin: '0px'
-  }
-}));
+    margin: "0px",
+  },
+}))
 
-const Dashboard = (props) => {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState("");
-  const [increment, setIncrement] = useState(0)
-  const classes = useStyles();
+const Dashboard = ({ postReducer, posts, setPosts, ...props }) => {
+  const [loading, setLoading] = useState(true)
+  const classes = useStyles()
 
   useEffect(() => {
-    getPosts();
-  }, []);
-
-  const getPosts = () => {
     axios
       .get("/api/posts")
       .then((res) => {
-        setPosts(res.data);
-        setLoading(false);
+        setPosts(res.data)
       })
       .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const searchPosts = () => {
-    axios
-      .get(`/api/posts/?filter=${filter}`)
-      .then((res) => {
-        setPosts(res.data);
+        console.log(err)
       })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+      .finally(() => setLoading(false))
+  }, [])
 
-  const resetState = () => {
-    axios
-      .get("/api/posts")
-      .then((res) => {
-        setFilter("");
-        setPosts(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  function handleFilter(e) {
-    setFilter(e.target.value);
-  }
-
-  function incrementHandler() {
-    setIncrement(increment + 1)
-  }
+  // function incrementHandler() {
+  //   setIncrement(increment + 1)
+  // }
 
   return (
     <div className={classes.backgroundImg}>
-      <div className={classes.searchBox}>
-        <TextField
-          placeholder="Search Posts Title..."
-          onChange={handleFilter}
-          value={filter}
-        />
-        <Button onClick={searchPosts}>Search</Button>
-        <Button onClick={resetState}>Reset</Button>
-      </div>
       <div className={classes.posts}>
         {!loading ? (
-          posts.map((el) => {
+          postReducer.posts.map((el, index) => {
             return (
               <Card
                 className={classes.root}
-                variant="outlined"
-                key={el.id}
-                onClick={() => props.history.push(`/posts/${el.id}`)}
-              >
+                variant='outlined'
+                key={el?.id ?? index}
+                onClick={() => props.history.push(`/posts/${el.id}`)}>
                 <div className={classes.content}>
                   <CardContent>
-                    <h3>
-                      {el.title}
-                    </h3>
+                    <h3>{el.title}</h3>
                     <h5 className={classes.h5}>posted by: {el.username}</h5>
                     <p>{el.content}</p>
-                    <img src={el.img} alt='post img'/>
+                    <img src={el.img} alt='post img' />
                     <hr />
                     <div className={classes.actionBox}>
-                      <a href='#' className={classes.actions}><Favorite />Like</a>
-                      <a href='#' className={classes.actions}><Chat />Comment</a>
-                      <a href='#' className={classes.actions}><Reply />Share</a>
+                      <a href='#' className={classes.actions}>
+                        <Favorite />
+                        Like
+                      </a>
+                      <a href='#' className={classes.actions}>
+                        <Chat />
+                        Comment
+                      </a>
+                      <a href='#' className={classes.actions}>
+                        <Reply />
+                        Share
+                      </a>
                     </div>
                   </CardContent>
                 </div>
               </Card>
-            );
+            )
           })
         ) : (
-          <div className="load_box">
+          <div className='load_box'>
             <CircularProgress />
           </div>
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-const mapStateToProps = (reduxState) => reduxState;
-export default connect(mapStateToProps)(Dashboard);
+const mapStateToProps = (reduxState) => reduxState
+export default connect(mapStateToProps, { setFilter, setPosts })(Dashboard)

@@ -1,5 +1,9 @@
-import reducer from "./reducer";
-import { createStore, applyMiddleware } from "redux";
-import promiseMiddleware from "redux-promise-middleware";
+import userReducer from "./userReducer"
+import postReducer from "./postReducer"
+import filterReducer from "./filterReducer"
+import { createStore, combineReducers } from "redux"
 
-export default createStore(reducer, applyMiddleware(promiseMiddleware));
+export default createStore(
+  combineReducers({ userReducer, postReducer, filterReducer }),
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+)
