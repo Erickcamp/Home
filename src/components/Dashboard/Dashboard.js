@@ -55,6 +55,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-around',
     alignItems: 'center'
+  },
+
+  h5: {
+    margin: '0px'
   }
 }));
 
@@ -136,8 +140,9 @@ const Dashboard = (props) => {
                 <div className={classes.content}>
                   <CardContent>
                     <h3>
-                      {el.title} posted by: {el.username}
+                      {el.title}
                     </h3>
+                    <h5 className={classes.h5}>posted by: {el.username}</h5>
                     <p>{el.content}</p>
                     <img src={el.img} alt='post img'/>
                     <hr />
